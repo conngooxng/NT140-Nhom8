@@ -1,0 +1,4 @@
+"vpn"
+
+Một ứng dụng giúp kết nối tới proxy, phục vụ một số Task của đồ án.
+Chạy lệnh ./gradlew build để build. APK debug có thể cài trực tiếp vào Android.

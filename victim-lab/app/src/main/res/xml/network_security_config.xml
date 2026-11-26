@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Lab-only trust policy (see PLAN.md global constraints):
+  - Baseline: system CAs only, no cleartext anywhere by default.
+  - Cleartext HTTP is permitted ONLY for the lab domains under *.lab.test
+    (http.lab.test, ads.lab.test, shop.lab.test, ...).
+  - User-installed CAs (the lab mitmproxy CA from server/certs/mitm/) are
+    trusted ONLY for secure.lab.test, so Task 11's TLS-interception scenario
+    can present its fake certificate to this app.
+  - No third-party or production traffic is permitted; nothing outside the
+    *.lab.test namespace gets a cleartext or user-CA exception.
+-->
+<network-security-config>
+
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="false">secure.lab.test</domain>
+        <trust-anchors>
+            <!-- system first, then the user-installed lab mitmproxy CA -->
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </domain-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">lab.test</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+
+</network-security-config>

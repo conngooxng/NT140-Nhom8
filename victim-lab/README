@@ -1,0 +1,4 @@
+"victim"
+
+Ứng dụng cơ bản giúp gọi các endpoint cơ bản của server/.
+Chạy lệnh ./gradlew build để build. APK debug có thể cài trực tiếp vào Android.
